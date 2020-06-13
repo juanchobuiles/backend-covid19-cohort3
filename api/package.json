@@ -1,0 +1,20 @@
+{
+  "name": "music-platzimaster",
+  "version": "1.0.0",
+  "description": "Api Proyecto de musica, para subir mentorias con una pasarela de pago ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "<julianbuilesc@gmail.com> , <luis.lazcanocruz@gmail.com > ",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
