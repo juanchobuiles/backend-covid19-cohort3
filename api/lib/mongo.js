@@ -29,17 +29,61 @@ class MongoLib{
     mongoose.set('useFindAndModify', false);
   }
 
+  createModel(collection){
+    const schema = this.schemas[collection];
+    const Model = mongoose.model(collection, schema);
+    return Model;
+  }
+
   async getAll(model){
-    const schema = this.schemas[model];
-    let UserModel = mongoose.model(model, schema);
+    const Model = this.createModel(model);
     try {
-      const listData = await UserModel.find()
+      const listData = await Model.find();
       return listData;
     } catch (error) {
-      return error
+      return error;
     }
   };
 
+  async get(model, movieid){
+    const Model = this.createModel(model);
+    try {
+      const listData = await Model.findById(movieid);
+      return listData;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  async create(model, data){
+    const Model = this.createModel(model);
+    try {
+      const createdData = await Model(data).save();
+      return createdData;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async update(model, id ,data){
+    const Model = this.createModel(model);
+    try {
+      const updatedData = await Model.findByIdAndUpdate(id,data);
+      return updatedData;
+    } catch (error) {
+      return error
+    }
+  }
+
+  async delete(model, tutorialId){
+    const Model = this.createModel(model);
+    try {
+      const deletedData = await Model.findByIdAndDelete(tutorialId);
+      return deletedData;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = MongoLib;
