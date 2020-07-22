@@ -1,3 +1,2 @@
-api/node_modules
-api/.env
-www/node_modules
+node_modules
+.env
