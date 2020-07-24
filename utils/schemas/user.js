@@ -3,7 +3,7 @@ const userIdSchema = joi.string().regex(/^[0-9a-fA-F]{24}$/);
 const emailSchema = joi
   .string()
   .email({ minDomainSegments: 2, tlds: { allow: ['com', 'co', 'es', 'net'] } });
-const passwordSchema = joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'));
+const passwordSchema = joi.string();
 const firstNameSchema = joi.string().min(3);
 const lastNameSchema = joi.string().min(3);
 const yearsOldSchema = joi.number().integer().min(1).max(99);
@@ -13,9 +13,9 @@ const citySchema = joi.string().min(3);
 const createUserSchema = {
   email: emailSchema.required(),
   password: passwordSchema.required(),
-  firstName: firstNameSchema.required(),
-  lastName: lastNameSchema,
-  yearsOld: yearsOldSchema,
+  first_name: firstNameSchema.required(),
+  last_name: lastNameSchema,
+  years_old: yearsOldSchema,
   country: countrySchema,
   city: citySchema,
 };
