@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 
 class UsersService{
   constructor(){
-    this.UserModel = 'user';
-    this.AuthModel = 'auth';
+    this.UserModel = 'User';
+    this.AuthModel = 'Auth';
     this.mongoDb = new MongoLib();
   }
 
