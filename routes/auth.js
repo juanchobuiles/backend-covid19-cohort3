@@ -1,22 +1,51 @@
 const express = require('express');
-const userService = require('../services/users');
+const passport = require('passport');
+const boom = require('@hapi/boom');
+const jwt = require('jsonwebtoken');
+const UserService = require('../services/users');
+const { config } = require('../config')
+
+//Basic Strategy
+require('../utils/auth/strategies/basic');
 
 function usersApi(app) {
   const router = express.Router();
-  app('/api/auth', router);
 
-  const usersService =  new UsersService();
+  app.use('/api/auth', router);
+  const userService =  new UserService();
 
   // Login
   router.post('/sign-in', (req, res, next) => {
+    passport.authenticate('basic', function(error, user){
+      try {
+        if(error || !user){
 
+          next(boom.unauthorized());
+        }
+        req.login( user, { session: false }, async function(error){
+          if(error){
+            next(error);
+          }
+
+          const { user_id:id, email } = user;
+          const payload = {
+            sub: id,
+              email,
+          }
+          const token = jwt.sign(payload, config.authJwtSecret, {expiresIn: '15m'});
+          return res.status(200).json({ token, user: {id, email}});
+        })
+      } catch (error) {
+        next(error)
+      }
+    })(req, res, next);
   });
 
   // Register
   router.post('/sign-up', async (req,res, next) => {
     const {body: user} = req;
     try {
-      const createdUserId = await userService.createdUser( { user })
+      const createdUserId = await userService.createUser( { user })
       res.status(201).json({
         data: createdUserId,
         message: 'user created',

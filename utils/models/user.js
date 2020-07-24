@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// This is the schema for model user on database
 const user = new Schema({
-
- firstName: { type: String, required: true, minlength: 3 },
-  lastName: { type: String, minlength: 3 },
-  yearsOld: { type: Number, min: 1, max: 100 },
-  country: { type: String, minlength: 3 },
-  city: { type: String, minlength:3 }
+  first_name: String,
+  last_name: String,
+  years_old: Number,
+  country: String,
+  city: String,
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', user);
+module.exports = user;
