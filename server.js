@@ -5,7 +5,7 @@ const app = express();
 const { config } = require('./config');
 const tutorialsApi = require('./routes/tutorials');
 const categoriesApi = require('./routes/category');
-const usersApi = require('./routes/auth')
+const usersApi = require('./routes/auth');
 
 const {
   logErrors,
@@ -18,8 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
-tutorialsApi(app);
-categoriesApi(app);
 usersApi(app);
 
 // Errors middleware
