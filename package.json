@@ -1,7 +1,10 @@
 {
-  "name": "music-platzimaster",
+  "engines": {
+    "node": "12.18.x"
+  },
+  "name": "covid-platzimaster",
   "version": "1.0.0",
-  "description": "Api Proyecto de musica, para subir mentorias con una pasarela de pago ",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
