@@ -4,15 +4,15 @@ const bcrypt = require('bcrypt');
 
 class UsersService {
   constructor() {
-    this.UserModel = 'user';
-    this.AuthModel = 'auth';
+    this.UserModel = 'User';
+    this.AuthModel = 'Auth';
     this.mongoDb = new MongoLib();
   }
 
-  // async getUser({email}){
-  //   const [user] = await this.mongoDb.getAll(this.collection, { email })
-  //   return user;
-  // }
+  async getUser({ email }) {
+    const [user] = await this.mongoDb.getAll(this.AuthModel, { email });
+    return user;
+  }
 
   /**
    * Create a user, this operate over two models
@@ -60,15 +60,15 @@ class UsersService {
     return createUserId;
   }
 
-  // async getOrCreateuser({user}){
-  //   const queriedUser = await this.getUser({email: user.email})
-  //   if(queriedUser){
-  //     return queriedUser;
-  //   }
+  async getOrCreateuser({ user }) {
+    const queriedUser = await this.getUser({ email: user.email });
+    if (queriedUser) {
+      return queriedUser;
+    }
 
-  //   await this.createUser({user});
-  //   return await this.getUser({ email: user.email});
-  // }
+    await this.createUser({ user });
+    return await this.getUser({ email: user.email });
+  }
 }
 
 module.exports = UsersService;

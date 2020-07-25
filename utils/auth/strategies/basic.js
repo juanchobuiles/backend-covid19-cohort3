@@ -3,16 +3,16 @@ const { BasicStrategy }= require('passport-http');
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 
-const AuthService = require('../../../services/auth');
+const UserService = require('../../../services/users');
 
 /**
  * Here is the authentication with:
  * email and password
  */
 passport.use(new BasicStrategy(async function(email, password, cb){
-  const authService = new AuthService();
+  const userService = new UserService();
   try {
-    const user = await authService.getUser({ email });
+    const user = await userService.getUser({ email });
     if(!user){
       return cb(boom.unauthorized(), false);
     }

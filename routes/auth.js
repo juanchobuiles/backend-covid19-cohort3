@@ -19,7 +19,7 @@ function usersApi(app) {
   const router = express.Router();
 
   app.use('/api/auth', router);
-  const userService = new UserService();
+  const userService =  new UserService();
 
   // Login
   router.post('/sign-in', (req, res, next) => {
@@ -47,6 +47,29 @@ function usersApi(app) {
         next(error);
       }
     })(req, res, next);
+  });
+
+  // Third party Login
+  router.post(
+    '/sign-provider',
+    async function(req ,res ,next ){
+      const body = req;
+      const { body: user } = body;
+
+      try {
+        const queriedUser = await userService.getOrCreateuser({ user });
+        const {_id: id, email } = queriedUser;
+
+        const payload = {
+          sub: id,
+          email,
+        }
+        const token = jwt.sign(payload, config.authJwtSecret, { expiresIn: '15m' });
+
+        return res.status(200).json({ token, user:{id, email}})
+      } catch (error) {
+        next(error)
+      }
   });
 
   // Register
