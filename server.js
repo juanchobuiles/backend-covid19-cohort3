@@ -14,15 +14,16 @@ const {
   errorHandler,
 } = require('./utils/middleware/errorHandlers.js');
 
-const corsOptions = { origin: config.urlFrontend };
-
 // body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //cors
 if (config.dev === 'production') {
+  const corsOptions = { origin: config.urlFrontend };
   app.use(cors(corsOptions));
+} else {
+  app.use(cors());
 }
 
 // routes
