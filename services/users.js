@@ -29,7 +29,7 @@ class UsersService {
       city,
     } = user;
 
-    //Verify if exist email
+    //Verify if already email exist
 
     const verifyEmail = await this.mongoDb.getOne(this.AuthModel, {
       email: email,
