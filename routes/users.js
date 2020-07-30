@@ -7,34 +7,33 @@ function usersApi(app) {
 
   const userService = new UserService();
 
-  router.get('/', async function (req, res, next) {
+  router.get('/:userId', async function (req, res, next) {
+    console.log({ userId });
+    const { userId } = req.params;
     try {
-      const { _uid } = req.params;
-      const users = await userService.getUsers();
-
+      const users = userService.mongoDb.getOne({ userId });
       res.status(200).json({
-        data: _uid,
-        message: 'users listed',
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  router.get('/:_uid', async function (req, res, next) {
-    const { _uid } = req.params;
-
-    try {
-      // const movies = await userService.getMovie({ movieId });
-
-      res.status(200).json({
-        data: _uid,
+        data: users,
         message: 'movie retrieved',
       });
     } catch (err) {
       next(err);
     }
   });
+
+  // router.get('/', async function (req, res, next) {
+  //   try {
+  //     console.log(req.params);
+  //     const users = await userService.getUsers();
+
+  //     res.status(200).json({
+  //       data: users,
+  //       message: 'users listed',
+  //     });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // });
 }
 
 module.exports = usersApi;

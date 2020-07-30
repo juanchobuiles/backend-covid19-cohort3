@@ -18,7 +18,7 @@ const {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//cors
+// //cors
 if (config.dev === 'production') {
   const corsOptions = { origin: config.urlFrontend };
   app.use(cors(corsOptions));

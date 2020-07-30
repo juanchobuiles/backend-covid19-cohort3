@@ -14,13 +14,13 @@ class UsersService {
     return users || [];
   }
 
-  async getUser({ email }) {
-    const [user] = await this.mongoDb.getAll(this.AuthModel, { email });
-    return user;
-  }
+  // async getUser({ email }) {
+  //   const [user] = await this.mongoDb.getAll(this.AuthModel, { email });
+  //   return user;
+  // }
 
   async getUserUid({ _uid }) {
-    const [user] = await this.mongoDb.getAll(this.AuthModel, { _uid });
+    const [user] = await this.mongoDb.getOne(this.AuthModel, { _uid });
     return user;
   }
 
