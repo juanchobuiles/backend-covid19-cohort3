@@ -4,9 +4,9 @@ const cors = require('cors');
 const app = express();
 
 const { config } = require('./config');
-const tutorialsApi = require('./routes/tutorials');
-const categoriesApi = require('./routes/category');
-const usersApi = require('./routes/auth');
+
+const usersApi = require('./routes/users');
+const authApi = require('./routes/auth');
 
 const {
   logErrors,
@@ -28,6 +28,7 @@ if (config.dev === 'production') {
 
 // routes
 usersApi(app);
+authApi(app);
 
 // Errors middleware
 app.use(logErrors);

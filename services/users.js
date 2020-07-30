@@ -9,8 +9,18 @@ class UsersService {
     this.mongoDb = new MongoLib();
   }
 
+  async getUsers() {
+    const users = await this.mongoDb.getAll(this.UserModel);
+    return users || [];
+  }
+
   async getUser({ email }) {
     const [user] = await this.mongoDb.getAll(this.AuthModel, { email });
+    return user;
+  }
+
+  async getUserUid({ _uid }) {
+    const [user] = await this.mongoDb.getAll(this.AuthModel, { _uid });
     return user;
   }
 
@@ -19,44 +29,17 @@ class UsersService {
    * to implement a security layer at querys login
    */
   async createUser({ user }) {
-    const {
-      email,
-      password,
-      first_name,
-      last_name,
-      years_old,
-      country,
-      city,
-    } = user;
-
-    //Verify if already email exist
-
-    const verifyEmail = await this.mongoDb.getOne(this.AuthModel, {
-      email: email,
-    });
-
-    if (verifyEmail !== null) {
-      throw Boom.badRequest({
-        statusCode: 400,
-        error: 'Bad Request',
-        message: 'invalid query',
-      });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 8);
-
+    const { _uid, first_name, last_name, years_old, country, city } = user;
     const createUserId = await this.mongoDb.create(this.UserModel, {
+      _uid,
       first_name,
       last_name,
       years_old,
       country,
       city,
     });
-    const createAuthId = await this.mongoDb.create(this.AuthModel, {
-      email,
-      password: hashedPassword,
-      user_id: createUserId,
-    });
+    console.log(createUserId);
+
     return createUserId;
   }
 
