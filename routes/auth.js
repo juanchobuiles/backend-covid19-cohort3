@@ -69,6 +69,7 @@ function usersApi(app) {
       try {
         const createdUserId = await userService.createUser({ user });
         res.status(201).json({
+          status: 201,
           data: createdUserId,
           message: 'user created',
         });
