@@ -19,9 +19,9 @@ class UsersService {
   //   return user;
   // }
 
-  async getUserUid({ _uid }) {
-    const [user] = await this.mongoDb.getOne(this.AuthModel, { _uid });
-    return user;
+  async getUserUid(data) {
+    const user = await this.mongoDb.getOne(this.UserModel, data);
+    return user || null;
   }
 
   /**

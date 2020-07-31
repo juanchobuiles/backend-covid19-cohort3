@@ -3,37 +3,35 @@ const UserService = require('../services/users');
 
 function usersApi(app) {
   const router = express.Router();
-  app.use('/api/users', router);
+  app.use('/api/users/', router);
 
   const userService = new UserService();
 
-  router.get('/:userId', async function (req, res, next) {
-    console.log({ userId });
-    const { userId } = req.params;
+  router.get('/:_uid', async function (req, res, next) {
+    const { _uid } = req.params;
     try {
-      const users = userService.mongoDb.getOne({ userId });
+      const user = await userService.getUserUid({ _uid });
       res.status(200).json({
-        data: users,
-        message: 'movie retrieved',
+        data: user,
+        message: 'user listed',
       });
     } catch (err) {
       next(err);
     }
   });
 
-  // router.get('/', async function (req, res, next) {
-  //   try {
-  //     console.log(req.params);
-  //     const users = await userService.getUsers();
+  router.get('/', async function (req, res, next) {
+    try {
+      const users = await userService.getUsers();
 
-  //     res.status(200).json({
-  //       data: users,
-  //       message: 'users listed',
-  //     });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // });
+      res.status(200).json({
+        data: users,
+        message: 'users listed',
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
 }
 
 module.exports = usersApi;
