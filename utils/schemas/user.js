@@ -7,7 +7,7 @@ const emailSchema = joi
 const passwordSchema = joi.string();
 const firstNameSchema = joi.string().min(3);
 const lastNameSchema = joi.string().min(3);
-const yearsOldSchema = joi.number().integer().min(1).max(99);
+const yearsOldSchema = joi.number().integer().min(0).max(99);
 const countrySchema = joi.string().min(3);
 const citySchema = joi.string().min(3);
 

@@ -8,6 +8,8 @@ const UserService = require('../services/users');
 
 //Middleware
 const validationHandler = require('../utils/middleware/validationHandler');
+const authHandler = require('../utils/middleware/authHandler');
+
 const { createUserSchema, _uidSchema } = require('../utils/schemas/user');
 
 const { config } = require('../config');
@@ -51,25 +53,11 @@ function usersApi(app) {
 
   // Third party Login
   router.post('/sign-provider', async function (req, res, next) {
-    const body = req;
-    const { body: user } = body;
+    const { token, payload } = req.query;
 
-    try {
-      const queriedUser = await userService.getOrCreateuser({ user });
-      const { _id: id, email } = queriedUser;
-
-      const payload = {
-        sub: id,
-        email,
-      };
-      const token = jwt.sign(payload, config.authJwtSecret, {
-        expiresIn: '15m',
-      });
-
-      return res.status(200).json({ token, user: { id, email } });
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json({
+      message: 'funciono el handler',
+    });
   });
 
   // Register
@@ -81,6 +69,7 @@ function usersApi(app) {
       try {
         const createdUserId = await userService.createUser({ user });
         res.status(201).json({
+          status: 201,
           data: createdUserId,
           message: 'user created',
         });

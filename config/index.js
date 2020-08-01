@@ -10,6 +10,9 @@ const config = {
   dbName: process.env.DB_NAME,
   authJwtSecret: process.env.AUTH_JWT_SECRET,
   urlFrontend: process.env.URL_FRONTEND,
+  private_key_id: process.env.PRIVATE_KEY_ID,
+  client_email: process.env.CLIENT_EMAIL,
+  client_id: process.env.CLIENT_ID,
 };
 
 module.exports = { config };
