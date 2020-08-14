@@ -23,7 +23,7 @@ npm run dev
 - [Express](http://expressjs.com/) - framework for Node.js
 - [MongoDb](https://www.mongodb.com/) - Database
 - [Firebase](https://firebase.google.com/) - Firebase Authentication
-- [Postman] (https://www.postman.com/) - is a collaboration platform for API development.
+- [Postman](https://www.postman.com/) - is a collaboration platform for API development.
 - [NPM](https://www.npmjs.com/) - Dependency manager
 
 
