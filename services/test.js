@@ -14,9 +14,11 @@ class TestService {
     return tests || [];
   }
 
-  async getTestByIdUser({ id_user }) {
+  async getTestByIdUser(id_user) {
     try {
-      const testByUser = this.mongoDb.getOne(this.TestModel, id_user);
+      const testByUser = this.mongoDb.getOne(this.TestModel, {
+        id_user: id_user,
+      });
       return testByUser;
     } catch (error) {
       return error;
@@ -103,28 +105,29 @@ class TestService {
       } catch (error) {
         return error;
       }
-    }
-    //user alreadey has tests
+    } else {
+      //user alreadey has tests
 
-    //verify that not insert test in the same date
-    if (
-      formaterDate(testByUser.test.pop().date, 'YYYY-MM-DD') ===
-      formaterDate(test.date, 'YYYY-MM-DD')
-    ) {
-      throw Boom.badRequest('Solo se permite un hacer un test por día.');
-    }
+      //verify that not insert test in the same date
+      if (
+        formaterDate(testByUser.test.pop().date, 'YYYY-MM-DD') ===
+        formaterDate(test.date, 'YYYY-MM-DD')
+      ) {
+        throw Boom.badRequest('Solo se permite un hacer un test por día.');
+      }
 
-    //Add test of user
-    try {
-      const updateTest = await this.mongoDb.update(
-        this.TestModel,
-        testByUser._id,
-        { $push: { test: { ...test, result } } }
-      );
+      //Add test of user
+      try {
+        const updateTest = await this.mongoDb.update(
+          this.TestModel,
+          testByUser._id,
+          { $push: { test: { ...test, result } } }
+        );
 
-      return result;
-    } catch (error) {
-      return error;
+        return result;
+      } catch (error) {
+        return error;
+      }
     }
   }
 
