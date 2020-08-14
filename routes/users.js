@@ -12,6 +12,7 @@ function usersApi(app) {
     try {
       const user = await userService.getUserUid({ _uid });
       res.status(200).json({
+        status: 200,
         data: user,
         message: 'user listed',
       });
@@ -25,6 +26,7 @@ function usersApi(app) {
       const users = await userService.getUsers();
 
       res.status(200).json({
+        status: 200,
         data: users,
         message: 'users listed',
       });

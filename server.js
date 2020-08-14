@@ -7,6 +7,7 @@ const { config } = require('./config');
 
 const usersApi = require('./routes/users');
 const authApi = require('./routes/auth');
+const testApi = require('./routes/test');
 
 const {
   logErrors,
@@ -29,6 +30,7 @@ if (config.dev === 'production') {
 // routes
 usersApi(app);
 authApi(app);
+testApi(app);
 
 // Errors middleware
 app.use(logErrors);
